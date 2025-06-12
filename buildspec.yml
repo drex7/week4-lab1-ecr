@@ -1,0 +1,25 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20 
+    commands:
+      - npm install -g yarn
+  pre_build:
+    commands:
+      - yarn install
+      - yarn run prisma:generate # Generate Prisma client
+  build:
+    commands:
+      - yarn build
+  post_build:
+    commands:
+      - yarn start & # Start the app in the background to verify
+      - sleep 5 # Wait for the app to start
+      - curl -f http://localhost:3000 || exit 1 # Verify the app starts
+      - echo "Zipping app for Elastic Beanstalk..."
+      - zip -r app.zip . -x "node_modules/*" ".git/*" "*.zip"
+artifacts:
+  files:
+    - '**/*'
+  base-directory: '.'
