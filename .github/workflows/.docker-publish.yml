@@ -31,9 +31,13 @@ jobs:
 
     - name: Tag Docker image
       run: |
-        docker tag blogpost:latest ${{ secrets.ECR_REPOSITORY }}:${{ IMAGE_TAG }}
+        docker tag blogpost:latest ${{ secrets.ECR_REPOSITORY }}:${{ secrets.IMAGE_TAG }}
+      env:
+        IMAGE_TAG: ${{ secrets.IMAGE_TAG }}
       
 
     - name: Push Docker image to Amazon ECR
       run: |
-        docker push ${{ secrets.ECR_REPOSITORY }}:${{ IMAGE_TAG }}
+        docker push ${{ secrets.ECR_REPOSITORY }}:${{ secrets.IMAGE_TAG }}
+      env:
+        IMAGE_TAG: ${{ secrets.IMAGE_TAG }}
