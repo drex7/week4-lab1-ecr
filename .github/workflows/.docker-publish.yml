@@ -1,6 +1,6 @@
 name: Build & Push Nuxt App to Amazon ECR
 
-run-name: Run triggered by ${{ github.event_name }}
+run-name: Run triggered by ${{ github.event_name }} with commit message ${{ github.event.head_commit.message }}
 
 on:
   push:
@@ -23,8 +23,8 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.AWS_REGION }}
 
-    - name: Login to Amazon ECR Private Registry
-      run: aws ecr get-login-password | docker login --username AWS --password-stdin ${{ vars.ECR_REPOSITORY_URI }}
+    - name: Login to Amazon ECR Public Registry
+      run: aws ecr-public get-login-password | docker login --username AWS --password-stdin ${{ vars.PUBLIC_ECR_REPOSITORY_URI }}
 
     - name: Build Docker image
       run: |
