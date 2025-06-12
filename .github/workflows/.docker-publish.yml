@@ -22,6 +22,8 @@ jobs:
 
     - name: Login to Amazon ECR Private Registry
       run: aws ecr get-login-password | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
+      env:
+        IMAGE_TAG: ${{ secrets.IMAGE_TAG }}
 
     - name: Build Docker image
       run: |
@@ -30,6 +32,7 @@ jobs:
     - name: Tag Docker image
       run: |
         docker tag blogpost:latest ${{ secrets.ECR_REPOSITORY }}:${{ IMAGE_TAG }}
+      
 
     - name: Push Docker image to Amazon ECR
       run: |
