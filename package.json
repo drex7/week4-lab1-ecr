@@ -11,7 +11,7 @@
     "dev": "nuxt dev",
     "prebuild": "yarn prisma:generate",
     "build": "nuxt build",
-    "start": "PORT=8080 node .output/server/index.mjs",
+    "start": "node .output/server/index.mjs",
     "generate": "nuxt generate",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy"
