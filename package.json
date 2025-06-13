@@ -4,9 +4,12 @@
   "private": true,
   "license": "MIT",
   "type": "module",
+  "description": "A Nuxt.js application integrated with Prisma for database management.",
+  "author": "Derrick Asamoah <@drex7>",
+  "packageManager": "yarn@1.22.22",
   "scripts": {
     "dev": "nuxt dev",
-    "prebuild": "npm run prisma:generate",
+    "prebuild": "yarn prisma:generate",
     "build": "nuxt build",
     "start": "PORT=8080 node .output/server/index.mjs",
     "generate": "nuxt generate",
