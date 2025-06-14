@@ -30,10 +30,12 @@ jobs:
     - name: Build Docker image
       run: |
         docker build --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} -t blogpost .
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     - name: Tag Docker image
       run: |
-        docker tag blogpost:latest ${{ vars.ECR_REPOSITORY_URI }}:${{ vars.IMAGE_TAG }}      
+        docker tag blogpost:latest ${{ vars.ECR_REPOSITORY_URI }}:${{ vars.IMAGE_TAG }}   
 
     - name: Push Docker image to Amazon ECR
       run: |

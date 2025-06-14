@@ -1,6 +1,9 @@
-import { prisma } from '../../prisma/db'
+import { prisma } from "../../lib/db";
 
+
+// https://nuxt.com/docs/guide/directory-structure/server
 export default defineEventHandler(async (event) => {
+    // https://nuxt.com/docs/guide/directory-structure/server#handling-requests-with-body
     const { email } = await readBody(event);
 
     try {

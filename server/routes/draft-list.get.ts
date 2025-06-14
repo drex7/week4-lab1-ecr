@@ -1,7 +1,7 @@
-import { prisma } from '../../prisma/db'
+import { prisma } from "~/lib/db";
 
+// https://nuxt.com/docs/guide/directory-structure/server
 export default defineEventHandler(async (event) => {
-    
     const posts = await prisma.post.findMany({
         where: { 
             published: false
@@ -11,7 +11,6 @@ export default defineEventHandler(async (event) => {
         }
     })
     .catch((error) => {
-
         console.error(error);
     });
 

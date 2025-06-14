@@ -6,10 +6,12 @@ export default defineNuxtConfig({
   typescript: {
     strict: false,
   },
+  /*
   alias: {
       "@": "/",
       "~prismaClient": fileURLToPath(new URL('./generated/prisma', import.meta.url))
   },
+  */
   app: {
     head: {
       title: "Blog Post App",

@@ -4,17 +4,17 @@
   "private": true,
   "license": "MIT",
   "type": "module",
-  "description": "A Nuxt.js application integrated with Prisma for database management.",
-  "author": "Derrick Asamoah <@drex7>",
-  "packageManager": "yarn@1.22.22",
   "scripts": {
     "dev": "nuxt dev",
-    "prebuild": "yarn prisma:generate",
-    "build": "nuxt build",
+    "prepare": "nuxt prepare",
+    "prebuild": "nuxt prepare && yarn run prisma:generate",
+    "build": "nuxt build && yarn run copy_prisma_engine",
     "start": "node .output/server/index.mjs",
     "generate": "nuxt generate",
+    "preview": "nuxt preview",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate deploy"
+    "prisma:migrate": "prisma migrate deploy",
+    "copy_prisma_engine": "mv ./generated/prisma/libquery_engine-rhel-openssl-3.0.x.so.node .output/server/node_modules/@prisma/client/"
   },
   "dependencies": {
     "@prisma/client": "6.9.0",
