@@ -44,7 +44,7 @@ jobs:
         id: push
         shell: bash
         env:
-          ECR_REPOSITORY_URI: ${{ secrets.ECR_REPOSITORY_URI }}
+          ECR_REPOSITORY_URI: ${{ vars.ECR_REPOSITORY_URI }}
           IMAGE_TAG: ${{ vars.IMAGE_TAG }}
         run: |
           docker push "$ECR_REPOSITORY_URI:$IMAGE_TAG"
