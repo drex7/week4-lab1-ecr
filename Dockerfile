@@ -18,7 +18,7 @@ COPY . .
 # RUN yarn prisma:generate
 
 # Build application
-RUN --mount-type=secret,id=db-url-id,env=DATABASE_URL \ 
+RUN --mount=type=secret,id=db-url-id,env=DATABASE_URL \ 
 		yarn build
 
 # Stage 2: Runtime
