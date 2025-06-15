@@ -27,16 +27,27 @@ jobs:
         with:
           registry-type: public
 
-      - name: Build Docker image
-        run: |
-          DOCKER_BUILDKIT=1 docker build --secret id=db-url-id,env=DATABASE_URL -t blogpost-app .
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build & Tag Docker image
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
-      - name: Tag Docker image
+          IMAGE_TAG: ${{ vars.IMAGE_TAG }}
+        id: build-and-tag
+        shell: bash
         run: |
-          docker tag blogpost-app:latest ${{ vars.ECR_REPOSITORY_URI }}:${{ vars.IMAGE_TAG }}
+          docker build --secret id=db-url-id,env=DATABASE_URL -t $IMAGE_TAG .
+          echo "IMAGE $IMAGE_TAG is built and tagged"
 
       - name: Push Docker image to Amazon ECR
+        id: push
+        shell: bash
+        env:
+          ECR_REPOSITORY_URI: ${{ secrets.ECR_REPOSITORY_URI }}
+          IMAGE_TAG: ${{ vars.IMAGE_TAG }}
         run: |
-          docker push ${{ vars.ECR_REPOSITORY_URI }}:${{ vars.IMAGE_TAG }}
+          docker push "$ECR_REPOSITORY_URI:$IMAGE_TAG"
+          echo "IMAGE $IMAGE_TAG is pushed to $ECR_REPOSITORY_URI"
+          echo "image_tag=$IMAGE_TAG" 
+          echo "full_image=$ECR_REPOSITORY_URI:$IMAGE_TAG"
