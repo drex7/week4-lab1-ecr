@@ -29,7 +29,8 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} -t blogpost .
+        docker build \ 
+          --secret id=db-url-id,env=${{ secrets.DATABASE_URL }} -t blogpost .
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
 

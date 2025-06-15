@@ -5,20 +5,21 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Inject .env at build time (needed for Prisma)
-ARG DATABASE_URL
-ENV DATABASE_URL=$DATABASE_URL
+# # Inject .env at build time (needed for Prisma)
+# ARG DATABASE_URL
+# ENV DATABASE_URL=$DATABASE_URL
 
 COPY package*.json ./
 RUN yarn install
 
 COPY . .
 
-# Run Prisma migrations
-RUN yarn prisma:generate
+# # Run Prisma migrations
+# RUN yarn prisma:generate
 
 # Build application
-RUN yarn build
+RUN --mount-type=secret,id=db-url-id,env=DATABASE_URL \ 
+		yarn build
 
 # Stage 2: Runtime
 FROM node:20-alpine AS runner
