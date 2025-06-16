@@ -7,10 +7,15 @@ on:
     branches:
       - main
 
+env:
+  IMAGE_TAG: ${{ vars.IMAGE_TAG }}
+  ECR_REPOSITORY_URI: ${{ vars.ECR_REPOSITORY_URI }}
+  
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -40,14 +45,15 @@ jobs:
           docker build --secret id=db-url-id,env=DATABASE_URL -t $IMAGE_TAG .
           echo "IMAGE $IMAGE_TAG is built and tagged"
 
+      - name: Tag Docker image
+        run: |
+          docker tag $IMAGE_TAG:latest $ECR_REPOSITORY_URI:$IMAGE_TAG      
+
       - name: Push Docker image to Amazon ECR
         id: push
         shell: bash
-        env:
-          ECR_REPOSITORY_URI: ${{ vars.ECR_REPOSITORY_URI }}
-          IMAGE_TAG: ${{ vars.IMAGE_TAG }}
         run: |
-          docker push "$ECR_REPOSITORY_URI:$IMAGE_TAG"
+          docker image push "$ECR_REPOSITORY_URI:$IMAGE_TAG"
           echo "IMAGE $IMAGE_TAG is pushed to $ECR_REPOSITORY_URI"
           echo "image_tag=$IMAGE_TAG" 
           echo "full_image=$ECR_REPOSITORY_URI:$IMAGE_TAG"
