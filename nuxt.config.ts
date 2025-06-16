@@ -2,9 +2,7 @@ import { fileURLToPath } from "url";
 
 export default defineNuxtConfig({
   runtimeConfig: {
-    private: {
-      DATABASE_URL: process.env.DATABASE_URL //|| "file:./dev.db",
-    },
+    DATABASE_URL: process.env.DATABASE_URL //|| "file:./dev.db",
   },
   compatibilityDate: '2025-06-10',
   // Disable strict
