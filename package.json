@@ -14,7 +14,7 @@
     "preview": "nuxt preview",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
-    "copy_prisma_engine": "mv ./generated/prisma/libquery_engine-rhel-openssl-3.0.x.so.node .output/server/node_modules/@prisma/client/"
+    "copy_prisma_engine": "mv ./generated/prisma/libquery_engine* .output/server/node_modules/@prisma/client/"
   },
   "dependencies": {
     "@prisma/client": "6.9.0",
